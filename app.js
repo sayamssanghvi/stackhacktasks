@@ -77,6 +77,6 @@ app.get('*', (req, res) => {
     res.send("404 Page Does Not Exist");
 });
 
-app.listen(port,()=> {
+app.listen(port, () => {
     console.log("server is up and running");
-})
+});
