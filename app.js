@@ -12,6 +12,8 @@ admin.initializeApp({
   databaseURL: "https://stackhacktasks.firebaseio.com",
 });
 
+const port = process.env.PORT;
+
 app.use(express.json());
 
 app.post('/task',Auth,async (req,res) => {
