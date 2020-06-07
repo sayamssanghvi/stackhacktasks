@@ -38,26 +38,13 @@ app.get('/task', Auth, async (req, res) => {
             sort = req.query.date;
             delete req.query.date;
         }
-        let tasks = await Task.where(req.query).sort({ dueDate: sort });
+        let tasks = await Task.find({owner:req.body.owner}).where(req.query).sort({ dueDate: sort });
         if (!tasks || !tasks.length)
             return res.status(404).send({ status: "No task found." });
         res.send({ tasks });
     } catch (e) {
         console.log(e);
         res.status(500).send({ e });
-    }
-});
-
-app.get('/alltask', Auth, async (req, res) => {
-    
-    try {
-        let tasks = await Task.getOnlyTask();
-        if (!tasks.length)
-            return res.status(404).send({ status: "No Tasks added yet" });
-        res.send({ tasks });
-    } catch (e) {
-        console.log(e);
-        res.status(e).send({ e });
     }
 });
 
@@ -89,7 +76,18 @@ app.patch('/task/:id', Auth,async (req, res) => {
         console.log(e);
         res.status(500).send({ e });
     }
-})
+});
+
+app.delete('/task/:id', async (req, res) => {
+    try {
+        let task = await Task.findById(req.params.id);
+        await task.remove();
+        res.send({ status:"Task Deleted"});     
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({ e })
+    }
+});
 
 app.get('*', (req, res) => {
     res.send("404 Page Does Not Exist");
