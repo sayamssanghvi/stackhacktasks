@@ -16,7 +16,7 @@ admin.initializeApp({
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use(cors);
+app.use(cors());
 app.post('/task',Auth,async (req,res) => {
     
     try {
