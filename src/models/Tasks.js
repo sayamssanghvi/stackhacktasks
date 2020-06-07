@@ -35,11 +35,6 @@ Schema.statics.getOnlyTask = async () => {
   let allData = await Task.find();
   let tasks =allData.map((value) => {
     const task = value.toObject();
-    delete task.dueDate;
-    delete task.status;
-    delete task.label;
-    delete task.__v;
-    delete task.owner;
     return task;
   });
   return tasks;
