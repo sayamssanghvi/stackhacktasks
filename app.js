@@ -1,6 +1,7 @@
 const express = require('express');
 require('./src/db/mongoose');
 const Task = require('./src/models/Tasks');
+const cors = require('cors');
 const admin = require('firebase-admin');
 const Auth = require('./src/firebase/Auth');
 const app = express();
@@ -15,7 +16,7 @@ admin.initializeApp({
 const port = process.env.PORT;
 
 app.use(express.json());
-
+app.use(cors);
 app.post('/task',Auth,async (req,res) => {
     
     try {
