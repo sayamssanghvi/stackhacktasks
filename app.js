@@ -40,7 +40,7 @@ app.get('/task', Auth, async (req, res) => {
         }
         let tasks = await Task.find({owner:req.body.owner}).where(req.query).sort({ dueDate: sort });
         if (!tasks || !tasks.length)
-            return res.status(404).send({ status: "No task found." });
+            return res.status(404).send({task:[]});
         res.send({ tasks });
     } catch (e) {
         console.log(e);
