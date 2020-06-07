@@ -71,6 +71,23 @@ app.get('/task/:id', Auth, async (req, res) => {
         console.log(e);
         res.status(500).send({ e });
     }
+});
+
+app.patch('/task/:id', Auth,async (req, res) => {
+    
+    try {
+        if (!req.body.status)
+            return res.status(404).send({ status: "PLease send the status to be changed" });
+        let task = await Task.findById(req.params.id);
+        if (!task)
+            return res.status(404).send({ status: "Please send a valid task" });
+        task.status = req.body.status;
+        await task.save();
+        res.send({ status: "Status has been Updated" });
+    } catch (e) {
+        console.log(e);
+        res.status(500).send({ e });
+    }
 })
 
 app.get('*', (req, res) => {
