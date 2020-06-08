@@ -24,7 +24,7 @@ app.post('/task',Auth,async (req,res) => {
         if (!task.task)
             res.status(401).send({ status: "Please Enter a valid task" });
       await task.save();
-      res.send({task});   
+      res.send({_id:task._id});   
     }catch(e){
         console.log(e);
         res.status(500).send({status:e})
