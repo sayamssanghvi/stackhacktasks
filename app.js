@@ -24,7 +24,7 @@ app.post('/task',Auth,async (req,res) => {
         if (!task.task)
             res.status(401).send({ status: "Please Enter a valid task" });
       await task.save();
-      res.send({ status: "Task saved" });   
+      res.send({task});   
     }catch(e){
         console.log(e);
         res.status(500).send({status:e})
@@ -40,7 +40,7 @@ app.get('/task', Auth, async (req, res) => {
         }
         let tasks = await Task.find({owner:req.body.owner}).where(req.query).sort({ dueDate: sort });
         if (!tasks || !tasks.length)
-            return res.status(404).send({task:[]});
+            return res.send({tasks:[]});
         res.send({ tasks });
     } catch (e) {
         console.log(e);
